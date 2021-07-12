@@ -1,50 +1,97 @@
-class DisplayObject{
-    constructor(type){
+class DisplayObject {
+    constructor(type, mesh_type) {
         this.type = type;
+        this.mesh_type = mesh_type;
+        // this.material_type = mesh_type;
         this.color = 0xffffff;
         this.oldMaterial = null;
         //['Cube', 'Sphere','Cone','Cylinder','Torus','Tea pot']
         this.geometries = {
-            "Sphere": new THREE.SphereGeometry( 1, 32, 32 ),
-            "Cube": new THREE.BoxGeometry( 1, 1, 1 ),
-            "Cylinder": new THREE.CylinderGeometry( 1, 1, 3, 32 ),
-            "Torus": new THREE.TorusGeometry( 1, 0.5, 16, 100 ), //radius, tube, radialSegments, tubularSegments
-            "Cone": new THREE.ConeGeometry( 1, 3, 32 ),
+            "Sphere": new THREE.SphereGeometry(2, 64, 64),
+            "Cube": new THREE.BoxGeometry(3, 3, 3, 30, 30, 30),
+            "Cylinder": new THREE.CylinderGeometry(1.5, 1.5, 5, 64, 64),
+            "Torus": new THREE.TorusGeometry(2, 0.8, 30, 200), //radius, tube, radialSegments, tubularSegments
+            "Cone": new THREE.ConeGeometry(2, 4, 64, 64),
         };
-        this.materials = new THREE.MeshStandardMaterial( this.color );
-        this.mesh = new THREE.Mesh(this.geometries[type], this.materials);
-        this.display = this.mesh;
+        this.materials = {
+            'Mesh': new THREE.MeshStandardMaterial(this.color),
+            'Points': new THREE.PointsMaterial({ size: 0.005, color: this.color })
+        }
+        // this.materials = new THREE.PointsMaterial({
+        //     size: 0.00005,
+        // });
+        // this.mesh = new THREE.Points(this.geometries[type], this.materials);
+        this.mesh = {
+            'Mesh': new THREE.Mesh(this.geometries[type], this.materials['Mesh']),
+            'Points': new THREE.Points(this.geometries[type], this.materials['Points'])
+        }
+        this.display = this.mesh[this.mesh_type];
     }
-    updateGeometry(type){
+    updateGeometry(type) {
+        if (this.mesh.geometry == null) {
+            console.log("Error: Please select display type");
+        }
         this.mesh.geometry.dispose();
+        // var update_geometry = this.geometries[type];
+        // var update_material =
         this.mesh.geometry = this.geometries[type];
     }
-    updateColor(color){
+    updateColor(color) {
         this.mesh.material.color.set(color);
     }
-    updateSurface(value){
-        if(value === "Solid"){
+    updateSurface(value) {
+        if (value === "Solid") {
             this.swapSolid();
         }
-        else if(value === "Point"){
+        if (value === "Point") {
             this.swapPoint();
-        }else if(value === "Line"){
+        }
+        if (value === "Line") {
             this.swapLine();
         }
     }
-    swapPoint(){
-        
-    }
-    swapLine(){
-        var wireframe = new THREE.WireframeGeometry(this.mesh.geometry);
-        var line = new THREE.LineSegments(wireframe);
-        line.material.depthTest = false;
-        line.material.opacity = 0.25;
-        line.material.transparent = true;
-        this.display = line;
-    }   
-    swapSolid(){
+    swapPoint() {
+        // this.mesh_type = 'Points';
+        // this.display = this.mesh[this.mesh_type];
+        // var points_material = this.materials['Points'];
+        // var point_geometry = this.geometries[this.type];
+        this.mesh_type = 'Points';
+        // var points_mesh = new THREE.Points(point_geometry, points_material);
+        this.mesh = new THREE.Points(this.geometries[this.type], this.materials['Points']);;
         this.display = this.mesh;
+        this.display.castShadow = true;
+        this.display.position.z = 2.5;
+        this.display.position.x = 1;
+        this.display.position.y = 1;
+        // this.mesh[this.mesh_type].material = new THREE.PointsMaterial({
+        //     color: 'blue'
+        // });
+        // this.mesh.mesh_type = 'Points'
     }
-    
+    swapLine() {
+        var wireframe = new THREE.WireframeGeometry(this.geometries[this.type]);
+        // var line = new THREE.LineSegments(wireframe);
+        // line.material.depthTest = false;
+        // line.material.opacity = 0.25;
+        // line.material.transparent = true;
+        this.mesh = new THREE.LineSegments(wireframe);
+        this.mesh.material.depthTest = false;
+        this.mesh.material.opacity = 0.25;
+        this.mesh.material.transparent = true;
+        this.display = this.mesh;
+        this.display.castShadow = true;
+        this.display.position.z = 2.5;
+        this.display.position.x = 1;
+        this.display.position.y = 1;
+    }
+    swapSolid() {
+        this.mesh_type = 'Mesh';
+        this.mesh = new THREE.Mesh(this.geometries[this.type], this.materials[this.mesh_type])
+        this.display = this.mesh;
+        this.display.castShadow = true;
+        this.display.position.z = 2.5;
+        this.display.position.x = 1;
+        this.display.position.y = 1;
+    }
+
 }
