@@ -177,7 +177,7 @@ gui.add({ type: "translate" }, 'type', ["translate", "rotate", "scale"]).name("T
 gui.add(animationSet, "callback", ["Reset", "Orbiting", "Rotation"]).name("Animation").onChange(function (value) {
   animation = value;
 });
-gui.add(object, 'type', ['Cube', 'Sphere', 'Cone', 'Cylinder', 'Torus']).name("Object").onChange(function (value) {
+gui.add(object, 'type', ['Cube', 'Sphere', 'Cone', 'Cylinder', 'Torus', 'Knot', 'Tetrahedron', 'Dodecahedron']).name("Object").onChange(function (value) {
   object.updateGeometry(value);
 });
 

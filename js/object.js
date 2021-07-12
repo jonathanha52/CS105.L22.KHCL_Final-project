@@ -12,6 +12,9 @@ class DisplayObject {
             "Cylinder": new THREE.CylinderGeometry(1.5, 1.5, 5, 64, 64),
             "Torus": new THREE.TorusGeometry(2, 0.8, 30, 200), //radius, tube, radialSegments, tubularSegments
             "Cone": new THREE.ConeGeometry(2, 4, 64, 64),
+            "Knot": new THREE.TorusKnotGeometry(2, 0.4, 150, 32),
+            "Tetrahedron": new THREE.TetrahedronGeometry(2, 100),
+            "Dodecahedron": new THREE.DodecahedronGeometry(2, 32),
         };
         this.materials = {
             'Mesh': new THREE.MeshStandardMaterial(this.color),
@@ -29,7 +32,8 @@ class DisplayObject {
     }
     updateGeometry(type) {
         if (this.mesh.geometry == null) {
-            console.log("Error: Please select display type");
+            console.log("Error: Please select display type.");
+            window.alert("Please select Display type in Mesh setting first.")
         }
         this.mesh.geometry.dispose();
         // var update_geometry = this.geometries[type];
