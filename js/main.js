@@ -29,12 +29,12 @@ pointLight.shadow.camera.near = 0.5;
 pointLight.shadow.camera.far = 500;
 
 
-var object = new DisplayObject("Cube", "Mesh");
+var object = new DisplayObject("Cube", "Points");
 // for (var key in object) {s
 //   console.log(key, object[key]);
 // }
 object.display.castShadow = true;
-object.display.position.z = 2.5;
+object.display.position.z = 4;
 object.display.position.x = 1;
 object.display.position.y = 1;
 scene.add(object.display)

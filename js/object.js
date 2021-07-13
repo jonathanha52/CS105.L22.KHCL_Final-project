@@ -7,8 +7,8 @@ class DisplayObject {
         this.oldMaterial = null;
         //['Cube', 'Sphere','Cone','Cylinder','Torus','Tea pot']
         this.geometries = {
-            "Sphere": new THREE.SphereGeometry(2, 64, 64),
-            "Cube": new THREE.BoxGeometry(3, 3, 3, 30, 30, 30),
+            "Sphere": new THREE.SphereGeometry(3, 64, 64),
+            "Cube": new THREE.BoxGeometry(4, 4, 4, 20, 20, 20),
             "Cylinder": new THREE.CylinderGeometry(1.5, 1.5, 5, 64, 64),
             "Torus": new THREE.TorusGeometry(2, 0.8, 30, 200), //radius, tube, radialSegments, tubularSegments
             "Cone": new THREE.ConeGeometry(2, 4, 64, 64),
@@ -18,7 +18,8 @@ class DisplayObject {
         };
         this.materials = {
             'Mesh': new THREE.MeshStandardMaterial(this.color),
-            'Points': new THREE.PointsMaterial({ size: 0.005, color: this.color })
+            'Points': new THREE.PointsMaterial({ size: 0.01, color: this.color }),
+            'Line': new THREE.WireframeGeometry(this.geometries[this.type]),
         }
         // this.materials = new THREE.PointsMaterial({
         //     size: 0.00005,
@@ -26,7 +27,8 @@ class DisplayObject {
         // this.mesh = new THREE.Points(this.geometries[type], this.materials);
         this.mesh = {
             'Mesh': new THREE.Mesh(this.geometries[type], this.materials['Mesh']),
-            'Points': new THREE.Points(this.geometries[type], this.materials['Points'])
+            'Points': new THREE.Points(this.geometries[type], this.materials['Points']),
+            'Line': new THREE.LineSegments(this.materials['Line']),
         }
         this.display = this.mesh[this.mesh_type];
     }
