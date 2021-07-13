@@ -66,7 +66,7 @@ class DisplayObject {
         this.mesh = new THREE.Points(this.geometries[this.type], this.materials['Points']);;
         this.display = this.mesh;
         this.display.castShadow = true;
-        this.display.position.z = 2.5;
+        this.display.position.z = 4;
         this.display.position.x = 1;
         this.display.position.y = 1;
         // this.mesh[this.mesh_type].material = new THREE.PointsMaterial({
@@ -86,7 +86,7 @@ class DisplayObject {
         this.mesh.material.transparent = true;
         this.display = this.mesh;
         this.display.castShadow = true;
-        this.display.position.z = 2.5;
+        this.display.position.z = 4;
         this.display.position.x = 1;
         this.display.position.y = 1;
     }
@@ -95,7 +95,7 @@ class DisplayObject {
         this.mesh = new THREE.Mesh(this.geometries[this.type], this.materials[this.mesh_type])
         this.display = this.mesh;
         this.display.castShadow = true;
-        this.display.position.z = 2.5;
+        this.display.position.z = 4;
         this.display.position.x = 1;
         this.display.position.y = 1;
     }

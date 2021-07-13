@@ -29,7 +29,7 @@ pointLight.shadow.camera.near = 0.5;
 pointLight.shadow.camera.far = 500;
 
 
-var object = new DisplayObject("Cube", "Points");
+var object = new DisplayObject("Cube", "Mesh");
 // for (var key in object) {s
 //   console.log(key, object[key]);
 // }
@@ -104,16 +104,16 @@ const helper = new THREE.CameraHelper(pointLight.shadow.camera);
 scene.add(helper);
 
 camera.position.x = 0;
-camera.position.y = -4;
-camera.position.z = 10;
+camera.position.y = -2;
+camera.position.z = 12;
 
 camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 const animationSet = {
   callback: "Reset",
   "Reset": function () {
-    object.display.position.x = 1;
-    object.display.position.y = 1;
+    // object.display.position.x = 1;
+    // object.display.position.y = 1;
   },
   "Rotation": function () {
     object.display.rotation.x += 0.1;
@@ -157,16 +157,16 @@ objectMeshFolder.add(object, "mesh_type", ["Solid", "Point", "Line"]).name("Disp
 // objectMeshFolder.add(object.display.material, "wireframe");
 
 const cameraPositionFolder = gui.addFolder("Camera position");
-cameraPositionFolder.add(camera, "near", 0.1, camera.far).listen().onChange(function (value) {
+cameraPositionFolder.add(camera, "zoom", 0.1, 4).listen().onChange(function (value) {
   camera.updateProjectionMatrix();
 });
-cameraPositionFolder.add(camera, "far", 1000, 2000).listen().onChange(function (value) {
+cameraPositionFolder.add(camera, "fov", 1, 150).listen().onChange(function (value) {
   camera.updateProjectionMatrix();
 });
 
 const lightFolder = gui.addFolder("Light and shadow");
 lightFolder.add(pointLight, 'intensity', 0, 10)
-lightFolder.add(object.display, "castShadow", true, false).name("Cast shadow");
+lightFolder.add(pointLight, "castShadow", true, false).name("Cast shadow");
 lightFolder.add(pointLight.position, "x", -20, 20);
 lightFolder.add(pointLight.position, "y", -20, 20);
 lightFolder.add(pointLight.position, "z", -20, 20);
